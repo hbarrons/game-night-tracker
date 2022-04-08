@@ -31,3 +31,17 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"Username {self.username}"
 
+class GameNight(db.Model):
+    __tablename__ = 'game_night'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    game = db.Column(db.String(140), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+
+    def __init__(self, title, text, user_id):
+        self.title = title
+        self.text = text
+        self.user_id = user_id
+    
+    def __repr__(self):
+        return f"Post ID: {self.id} -- Date: {self.date} --- Title: {self.Title}"
