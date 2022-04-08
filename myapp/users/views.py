@@ -69,3 +69,13 @@ def account():
         form.email.data = current_user.email
 
     return render_template('account.html', form=form)
+
+
+from myapp.models import User, GameNight
+
+@users.route('/<username>')
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    game_night = GameNight.query.filter_by(author=user).order_by(GameNight.date.desc()).paginate(page=page, per_page=5) 
+    return render_template('user_game_night.html', game_night=game_night, user=user)
