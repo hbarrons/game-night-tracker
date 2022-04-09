@@ -53,9 +53,7 @@ app.register_blueprint(error_pages)
 from myapp.users.views import users
 app.register_blueprint(users)
 
-# linking and registering game_night views Blueprint
-from myapp.game_night.views import game_night
-app.register_blueprint(game_night)
+# linking and registering game_nights views Blueprint
+from myapp.game_night.views import game_nights
+app.register_blueprint(game_nights)
 
-from myapp.core.views import core
-app.register_blueprint(core)

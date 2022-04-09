@@ -18,7 +18,7 @@
         </li>
         {% if current_user.is_authenticated %}
         <li class="nav-link">
-            <a href="{{url_for('game_night.create_post')}}">Create Post</a> 
+            <a href="{{url_for('game_nights.create_post')}}">Create Post</a> 
         </li>
         <li class="nav-link">
             <a href="{{url_for('users.logout')}}">Log Out</a>

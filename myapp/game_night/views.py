@@ -4,13 +4,15 @@ from myapp import db
 from myapp.models import GameNight
 from myapp.game_night.forms import GameNightForm
 
-game_night = Blueprint('game_night', __name__)
+game_nights = Blueprint('game_nights', __name__)
 
-@game_night.route('/create', methods=['GET', 'POST'])
+#create
+@game_nights.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_post():
     form = GameNightForm()
     if form.validate_on_submit():
+        # the line below this is line 15
         game_night = GameNight(game=form.game.data, text=form.text.data, user_id=current_user.id)
         db.session.add(game_night)
         db.session.commit()
@@ -19,12 +21,17 @@ def create_post():
         return redirect(url_for('core.index'))
     return render_template('create_post.html', form=form)
 
-@game_night.route('/<int:game_night_id>')
+
+#read
+@game_nights.route('/<int:game_night_id>')
 def game_night(game_night_id):
     game_night = GameNight.query.get_or_404(game_night_id) 
-    return render_template('game_night.html', title=game_night.title, date=game_night.date, post=game_night)
+    return render_template('game_night.html', game=game_night.game, date=game_night.date, post=game_night)
 
-@game_night.route('/<int:game_night_id>/update',methods=['GET','POST'])
+
+
+#update
+@game_nights.route('/<int:game_night_id>/update',methods=['GET','POST'])
 @login_required
 def update(game_night_id):
     game_night = GameNight.query.get_or_404(game_night_id)
@@ -39,7 +46,7 @@ def update(game_night_id):
         game_night.text = form.text.data
         db.session.commit()
         flash('Game Information Updated')
-        return redirect(url_for('game_night.game_night', game_night_id=game_night.id))
+        return redirect(url_for('game_nights.game_night', game_night_id=game_night.id))
 
     elif request.method == 'GET':
         form.game.data = game_night.game
@@ -48,7 +55,8 @@ def update(game_night_id):
     return render_template('create_post.html',title='Updating',form=form)
 
 
-@game_night.route('/<int:game_night_id>/delete',methods=['GET','POST'])
+#delete
+@game_nights.route('/<int:game_night_id>/delete',methods=['GET','POST'])
 @login_required
 def delete_post(game_night_id):
 
