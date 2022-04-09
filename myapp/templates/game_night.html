@@ -7,9 +7,9 @@
   <p>{{post.text}}</p>
    {% if post.author == current_user %}
      <div>
-       <a class="btn btn-secondary" href="{{ url_for('game_night.update', game_night_id=post.id) }}">Update</a>
+       <a class="btn btn-secondary" href="{{ url_for('game_nights.update', game_night_id=post.id) }}">Update</a>
        <br>
-       <form action="{{ url_for('game_night.delete_post', game_night_id=post.id) }}" method="POST">
+       <form action="{{ url_for('game_nights.delete_post', game_night_id=post.id) }}" method="POST">
         <input class="btn btn-danger" type="submit" value="Delete">
       </form>
      </div>
